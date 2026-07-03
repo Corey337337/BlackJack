@@ -21,17 +21,17 @@ public:
     }
 
     void print(){
-        cout << suit << " " << rank << " - " << points << "points" << endl;
+        cout << suit << " " << rank << " - " << points << " points" << endl;
     }
-}
+};
 
 class Hand{
 private:    
-    Vector<Card> my_hand;
+    vector<Card> my_hand;
 public:
     Hand(vector<Card> m):my_hand{m}{}
 
-    void take_card(vector<Card>& all_cards){
+    void takeCard(vector<Card>& all_cards){
 
         int card = rand() % all_cards.size();
         my_hand.push_back(all_cards[card]);
@@ -66,12 +66,12 @@ public:
     void clear_hand(){
         my_hand.clear();
     }
-}
+};
 
 void newDeck(vector<Card>& all_cards) {
 	all_cards.clear();
-	string suits[4] = { "Пики", "Черви", "Бубны", "Трефы" };
-	string ranks[13] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Валет", "Дама", "Король", "Туз" };
+	string suits[4] = { "S", "H", "D", "C" };
+	string ranks[13] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
 	int pointss[13] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11 };
 
 	for (size_t i = 0; i < 4; i++)
@@ -151,117 +151,117 @@ int main(){
     cout << "Great! Your bet is: " << bet <<" \nTo start the game please enter - 1" << endl;
 
     while (true) {
-	cin >> choice;
-	try
-	{
-		if (choice != 1 and choice != 2 and choice != 3 and choice != 4) {
-			throw invalid_argument("");
-		}
-	}
-	catch (const exception&)
-	{
-		cout << "This command is not available!" << endl;
-		continue;
-	}
-	if (choice == 1) {
-		system("cls");
-		cout << "---------------------------------" << endl;
-		cout << "Take a card - 1\nPass the turn - 2" << endl;
-		cout << "---------------------------------" << endl;
-		cout << endl;
-		cout << "Your hand:\n" << endl;
-		hand_player.takeCard(all_cards);
-		hand_player.ShowHand();
-		points_player = hand_player.AllPoints();
-		cout << "---------------------------------" << endl;
-		
-		if (points_player > 21) {
-			cout << "You have more than 21 points - You lost!" << endl;
-			cout << endl;
-			money -= bet;
-			cout << "Your balance: " << money << endl;
-			cout << endl;
-			cout << "---------------------------------" << endl;
-			cout << "Play again - 3\nExit the game - 4" << endl;
-			cout << "---------------------------------" << endl;
-		}
-
-	}
-	else if (choice == 2) {
-		while (points_enemy < 20) {  
-			system("cls");
-			cout << "---------------------------------" << endl;
-			cout << "Cards of " << name << ":\n" << endl;
-			hand_player.ShowHand();
-			points_player = hand_player.AllPoints();
-			cout << "---------------------------------" << endl;
-			cout << "---------------------------------" << endl; 
-			cout << "Dealer's cards:\n" << endl;
-			hand_enemy.takeCard(all_cards);
-			hand_enemy.ShowHand();
-			points_enemy = hand_enemy.AllPoints();
-			cout << "---------------------------------" << endl; 
-			Sleep(1550);
-			if (points_enemy > points_player) { 
-				break;
+		cin >> choice;
+		try
+		{
+			if (choice != 1 && choice != 2 && choice != 3 && choice != 4) {
+				throw invalid_argument("");
 			}
 		}
-
-		if ((points_player <= 21 and points_player > points_enemy) or (points_enemy > 21 and points_player <= 21)) {
-			cout << name << " won!\n" << endl;
-			money += bet;
-			cout << "Your balance: " << money << endl;
-			cout << endl;
-			win_count++;
-			ofstream out("victory.txt");
-			out << "Number of your victories: " << win_count;
-			out.close();
+		catch (const exception&)
+		{
+			cout << "This command is not available!" << endl;
+			continue;
 		}
-		else if (points_player == points_enemy) {
-			cout << "It's a tie\n" << endl;
-		}
-		else {
-			money -= bet;
-			cout << "Dealer won!\n" << endl;
-			cout << "Your balance: " << money << endl;
-			cout << endl;
-		}
-		cout << "---------------------------------" << endl;
-		cout << "Play again - 3\nExit the game - 4" << endl;
-		cout << "---------------------------------" << endl;
-	}
-	else if (choice == 3) {
-		system("cls");
-		if (money > 0) {
-			newDeck(all_cards);
-			cout << "For the game to start, you need to make a bet!" << endl;
-			cout << endl;
-			bet = getBet(money);
+		if (choice == 1) {
 			system("cls");
 			cout << "---------------------------------" << endl;
 			cout << "Take a card - 1\nPass the turn - 2" << endl;
 			cout << "---------------------------------" << endl;
 			cout << endl;
-			cout << "Your hand is empty, take a card!\n" << endl;
+			cout << "Your hand:\n" << endl;
+			hand_player.takeCard(all_cards);
+			hand_player.ShowHand();
+			points_player = hand_player.AllPoints();
 			cout << "---------------------------------" << endl;
-			points_player = 0;
-			points_enemy = 0;
+			
+			if (points_player > 21) {
+				cout << "You have more than 21 points - You lost!" << endl;
+				cout << endl;
+				money -= bet;
+				cout << "Your balance: " << money << endl;
+				cout << endl;
+				cout << "---------------------------------" << endl;
+				cout << "Play again - 3\nExit the game - 4" << endl;
+				cout << "---------------------------------" << endl;
+			}
 
-			hand_player.clear_hand();
-			hand_enemy.clear_hand();
-
-			continue;
 		}
-		else {
-			cout << name << ", you don't have any money left! The game is over!" << endl;
+		else if (choice == 2) {
+			while (points_enemy < 20) {  
+				system("cls");
+				cout << "---------------------------------" << endl;
+				cout << "Cards of " << name << ":\n" << endl;
+				hand_player.ShowHand();
+				points_player = hand_player.AllPoints();
+				cout << "---------------------------------" << endl;
+				cout << "---------------------------------" << endl; 
+				cout << "Dealer's cards:\n" << endl;
+				hand_enemy.takeCard(all_cards);
+				hand_enemy.ShowHand();
+				points_enemy = hand_enemy.AllPoints();
+				cout << "---------------------------------" << endl; 
+				Sleep(1550);
+				if (points_enemy > points_player) { 
+					break;
+				}
+			}
+
+			if ((points_player <= 21 && points_player > points_enemy) || (points_enemy > 21 && points_player <= 21)) {
+				cout << name << " won!\n" << endl;
+				money += bet;
+				cout << "Your balance: " << money << endl;
+				cout << endl;
+				win_count++;
+				ofstream out("victory.txt");
+				out << "Number of your victories: " << win_count;
+				out.close();
+			}
+			else if (points_player == points_enemy) {
+				cout << "It's a tie\n" << endl;
+			}
+			else {
+				money -= bet;
+				cout << "Dealer won!\n" << endl;
+				cout << "Your balance: " << money << endl;
+				cout << endl;
+			}
+			cout << "---------------------------------" << endl;
+			cout << "Play again - 3\nExit the game - 4" << endl;
+			cout << "---------------------------------" << endl;
+		}
+		else if (choice == 3) {
+			system("cls");
+			if (money > 0) {
+				newDeck(all_cards);
+				cout << "For the game to start, you need to make a bet!" << endl;
+				cout << endl;
+				bet = getBet(money);
+				system("cls");
+				cout << "---------------------------------" << endl;
+				cout << "Take a card - 1\nPass the turn - 2" << endl;
+				cout << "---------------------------------" << endl;
+				cout << endl;
+				cout << "Your hand is empty, take a card!\n" << endl;
+				cout << "---------------------------------" << endl;
+				points_player = 0;
+				points_enemy = 0;
+
+				hand_player.clear_hand();
+				hand_enemy.clear_hand();
+
+				continue;
+			}
+			else {
+				cout << name << ", you don't have any money left! The game is over!" << endl;
+				break;
+			}
+
+		}
+		else if (choice == 4) {
 			break;
 		}
-
-	}
-	else if (choice == 4) {
-		break;
-	}
 	
-
+	}
 
 }
