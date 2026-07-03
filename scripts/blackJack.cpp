@@ -65,6 +65,49 @@ public:
     }
 }
 
+void newDeck(vector<Card>& all_cards) {
+	all_cards.clear();
+	string suits[4] = { "Пики", "Черви", "Бубны", "Трефы" };
+	string ranks[13] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Валет", "Дама", "Король", "Туз" };
+	int pointss[13] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11 };
+
+	for (size_t i = 0; i < 4; i++)
+	{
+		for (size_t j = 0; j < 13; j++)
+		{
+			Card c(suits[i], ranks[j], pointss[j]);
+			all_cards.push_back(c);
+		}
+	}
+}
+
+int money = 1000;
+
+int getBet(int m) {
+	int bet;
+	while (true) {
+		cout << "Your balance: " << m << endl;
+		cout << "Enter your bet: ";
+		cin >> bet;
+
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(10000, '\n');
+			cout << "Please enter a number!" << endl;
+			continue;
+		}
+
+		if (bet <= 0) {
+			cout << "The bet must be a positive number!" << endl;
+		}
+		else if (bet > m) {
+			cout << "Not enough money! Maximum: " << m << endl;
+		}
+		else {
+			return bet; 
+		}
+	}
+}
 
 int main(){
 
