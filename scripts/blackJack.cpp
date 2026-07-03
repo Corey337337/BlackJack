@@ -2,6 +2,9 @@
 #include <string>
 #include <vector>
 #include "time.h"
+#include <conio.h>
+#include <windows.h>
+#include <fstream>
 
 using namespace std;
 
@@ -110,5 +113,40 @@ int getBet(int m) {
 }
 
 int main(){
+    setlocale(LC_ALL, "");
+    srand(time(0));
 
+
+    vector<Card> all_cards;
+    newDeck(all_cards);
+
+
+
+    string name;
+    cout << "Welcome to BlackJack!\nPlease enter your name: ";
+    getline(cin, name);
+    system("cls");
+
+    vector<Card> player;
+    vector<Card> enemy;
+
+
+    Hand hand_player(player);
+    Hand hand_enemy(enemy);
+
+
+    int choice = 0;
+
+    int win_count = 0;
+
+    int points_player = 0;
+    int points_enemy = 0;
+
+    cout << "Hello, " << name << "!" << endl;
+    cout << "To start the game you need to make a bet!" << endl;
+    cout << endl;
+    int bet = getBet(money);
+
+    system("cls");
+    cout << "Great! Your bet is: " << bet <<" \nTo start the game please enter - 1" << endl;
 }
